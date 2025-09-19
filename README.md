@@ -101,9 +101,9 @@ The application can be configured via environment variables:
 
 - `DB_HOST`: PostgreSQL host (default: localhost)
 - `DB_PORT`: PostgreSQL port (default: 5432)
-- `DB_NAME`: Database name (default: mydatabase)
-- `DB_USER`: Database user (default: myuser)
-- `DB_PASSWORD`: Database password (default: mypassword)
+- `DB_NAME`: Database name (default: postgres)
+- `DB_USER`: Database user (default: postgres)
+- `DB_PASSWORD`: Database password (default: postgres)
 - `REDIS_HOST`: Redis host (default: localhost)
 - `REDIS_PORT`: Redis port (default: 6379)
 
@@ -131,7 +131,3 @@ ENTRYPOINT ["java", "-jar", "/app.jar"]
 ```
 
 3. Build and run with docker-compose
-
-## License
-
-MIT
