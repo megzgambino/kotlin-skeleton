@@ -27,9 +27,9 @@ fun Route.userRoutes(userService: UserService) {
             val user = userService.getUserById(id)
             if (user != null) {
                 call.respond(user)
-            } else {
-                call.respond(HttpStatusCode.NotFound, mapOf("error" to "User not found"))
+                return@get
             }
+            call.respond(HttpStatusCode.NotFound, mapOf("error" to "User not found"))
         }
 
         // POST create new user
@@ -55,11 +55,11 @@ fun Route.userRoutes(userService: UserService) {
                 val request = call.receive<UpdateUserRequest>()
                 val success = userService.updateUser(id, request)
 
-                if (success) {
-                    call.respond(HttpStatusCode.OK, mapOf("message" to "User updated successfully"))
-                } else {
+                if (!success) {
                     call.respond(HttpStatusCode.NotFound, mapOf("error" to "User not found"))
+                    return@put
                 }
+                call.respond(HttpStatusCode.OK, mapOf("message" to "User updated successfully"))
             } catch (e: Exception) {
                 call.respond(HttpStatusCode.BadRequest, mapOf("error" to e.message))
             }
@@ -74,11 +74,11 @@ fun Route.userRoutes(userService: UserService) {
             }
 
             val success = userService.deleteUser(id)
-            if (success) {
-                call.respond(HttpStatusCode.OK, mapOf("message" to "User deleted successfully"))
-            } else {
+            if (!success) {
                 call.respond(HttpStatusCode.NotFound, mapOf("error" to "User not found"))
+                return@delete
             }
+            call.respond(HttpStatusCode.OK, mapOf("message" to "User deleted successfully"))
         }
     }
 }
