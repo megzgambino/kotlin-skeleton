@@ -1,6 +1,5 @@
 package com.example.models
 
-import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 
 data class User(
