@@ -5,6 +5,7 @@ import com.example.plugins.DatabaseFactory.dbQuery
 import com.example.plugins.Users
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.selectAll
 import java.time.LocalDateTime
 
 class UserRepositoryImpl : UserRepository {
@@ -34,13 +35,13 @@ class UserRepositoryImpl : UserRepository {
     }
 
     override suspend fun findById(id: Int): User? = dbQuery {
-        Users.select { Users.id eq id }
+        Users.selectAll().where { Users.id eq id }
             .map(::resultRowToUser)
             .singleOrNull()
     }
 
     override suspend fun findByEmail(email: String): User? = dbQuery {
-        Users.select { Users.email eq email }
+        Users.selectAll().where { Users.email eq email }
             .map(::resultRowToUser)
             .singleOrNull()
     }
